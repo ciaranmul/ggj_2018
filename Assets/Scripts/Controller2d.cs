@@ -19,6 +19,8 @@ public class Controller2d : MonoBehaviour
     RaycastOrigins raycastOrigins;
     public CollisionInfo collisions;
 
+    float maxClimbAngle = 80;
+
     // Use this for initialization
     void Start()
     {
@@ -87,11 +89,28 @@ public class Controller2d : MonoBehaviour
 
             if (hit)
             {
-                velocity.x = (hit.distance - skinWidth) * directionX;
-                rayLength = hit.distance;
+                float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 
-                collisions.left = directionX == -1;
-                collisions.right = directionX == 1;
+                if(i == 0 && slopeAngle <= maxClimbAngle)
+                {
+                    float distanceToSlopeStart = 0;
+                    if (slopeAngle != collisions.oldSlopeAngle)
+                    {
+                        distanceToSlopeStart = hit.distance - skinWidth;
+                        velocity.x -= distanceToSlopeStart * directionX;
+                    }
+                    ClimbSlope(ref velocity, slopeAngle);
+                    velocity.x += distanceToSlopeStart * directionX;
+                }
+
+                if(!collisions.climbingSlope || slopeAngle>maxClimbAngle)
+                {
+                    velocity.x = (hit.distance - skinWidth) * directionX;
+                    rayLength = hit.distance;
+
+                    collisions.left = directionX == -1;
+                    collisions.right = directionX == 1;
+                }
             }
         }
     }
@@ -121,6 +140,20 @@ public class Controller2d : MonoBehaviour
         }
     }
 
+    void ClimbSlope(ref Vector3 velocity, float slopeAngle)
+    {
+        float moveDistance = Mathf.Abs(velocity.x);
+        float climbVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+
+        if (velocity.y <= climbVelocityY)
+        {
+            velocity.y = climbVelocityY;
+            velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
+            collisions.below = true;
+            collisions.climbingSlope = true;
+            collisions.slopeAngle = slopeAngle;
+        }
+    }
 
     struct RaycastOrigins
     {
@@ -131,10 +164,17 @@ public class Controller2d : MonoBehaviour
     public struct CollisionInfo
     {
         public bool left, right, above, below;
+        public bool climbingSlope;
+
+        public float slopeAngle, oldSlopeAngle;
 
         public void reset()
         {
             left = right = above = below = false;
+            climbingSlope = false;
+
+            oldSlopeAngle = slopeAngle;
+            slopeAngle = 0;
         }
     }
 

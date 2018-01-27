@@ -10,15 +10,17 @@ public class Player : MonoBehaviour {
     public float jumpHeight = 4f;
     public float timeToJumpApex = .4f;
 
+    public float maxPlayerSpeed = 6;
+
     Vector3 velocity;
-    public int moveSpeed = 2;
+    public int tempoInc = 2;
     float gravity;
     float jumpVelocity;
 
 	// Use this for initialization
 	void Start () {
         controller = GetComponent<Controller2d>();
-        velocity.x = Mathf.Clamp(0, -10, 10);
+        //velocity.x = Mathf.Clamp(0, -6, 6);
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex,2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 	}
@@ -37,7 +39,8 @@ public class Player : MonoBehaviour {
             velocity.y = jumpVelocity;
         }
 
-        velocity.x += input.x * moveSpeed;
+        if(velocity.x * input.x < maxPlayerSpeed)
+            velocity.x += input.x * tempoInc;
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 	}
