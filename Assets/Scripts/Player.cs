@@ -45,8 +45,6 @@ public class Player : MonoBehaviour {
 
         velocity.x = maxPlayerSpeed * GameObject.Find("Slider").transform.localPosition.x;
 
-        print("velocity.x = " + velocity.x);
-
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
