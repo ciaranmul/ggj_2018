@@ -37,10 +37,18 @@ public class Player : MonoBehaviour {
             velocity.y = 0;
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && controller.collisions.below)
-        {
-            velocity.y = jumpVelocity;
-            GameObject.Find("Jump").GetComponent<AudioSource>().Play();
+        
+        if(controller.collisions.below)
+        { 
+            animator.SetBool("jumping", false);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                velocity.y = jumpVelocity;
+                GameObject.Find("Jump").GetComponent<AudioSource>().Play();
+                animator.SetBool("jumping", true);
+                animator.SetBool("running", false);
+                animator.speed = 1;
+            }
         }
 
         velocity.x = maxPlayerSpeed * GameObject.Find("Slider").transform.localPosition.x;
@@ -51,12 +59,11 @@ public class Player : MonoBehaviour {
         controller.Move(velocity * Time.deltaTime);
 
         UpdateAnimation();
-
 	}
 
     void UpdateAnimation()
     {
-        if (Mathf.Abs(velocity.x) > 1)
+        if (Mathf.Abs(velocity.x) > 1 && controller.collisions.below)
         {
             animator.SetBool("running", true);
             animator.speed = Mathf.Abs(GameObject.Find("Slider").transform.localPosition.x);
@@ -65,6 +72,7 @@ public class Player : MonoBehaviour {
         {
             animator.SetBool("running", false);
         }
+        
     }
 
 }
