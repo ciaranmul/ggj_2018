@@ -10,7 +10,7 @@ public class Player : MonoBehaviour {
     public float jumpHeight = 4f;
     public float timeToJumpApex = .2f;
 
-    public float maxPlayerSpeed = 6;
+    public float maxPlayerSpeed = 10;
 
     Vector3 velocity;
     public int tempoInc = 2;
@@ -41,6 +41,9 @@ public class Player : MonoBehaviour {
 
         if(velocity.x * input.x < maxPlayerSpeed)
             velocity.x += input.x * tempoInc;
+
+        print("velocity.x = " + velocity.x);
+
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 	}
