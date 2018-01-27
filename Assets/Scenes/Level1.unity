@@ -576,7 +576,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1327471428}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.913, y: 1.271, z: 0}
+  m_LocalPosition: {x: 13.7, y: 5.07, z: 0}
   m_LocalScale: {x: 4.1019573, y: 1.676098, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -679,7 +679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 4
-  timeToJumpApex: 0.4
+  timeToJumpApex: 0.2
   maxPlayerSpeed: 6
   tempoInc: 2
 --- !u!114 &1531326944

@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
     Controller2d controller;
 
     public float jumpHeight = 4f;
-    public float timeToJumpApex = .4f;
+    public float timeToJumpApex = .2f;
 
     public float maxPlayerSpeed = 6;
 
