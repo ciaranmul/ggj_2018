@@ -581,9 +581,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c04eefac2ebb91438e998c8b2167337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpHeight: 4
+  timeToJumpApex: 0.4
   moveSpeed: 2
-  gravity: -20
-  jumpVelocity: 10
 --- !u!114 &1531326944
 MonoBehaviour:
   m_ObjectHideFlags: 0

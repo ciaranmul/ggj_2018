@@ -7,15 +7,20 @@ public class Player : MonoBehaviour {
 
     Controller2d controller;
 
+    public float jumpHeight = 4f;
+    public float timeToJumpApex = .4f;
+
     Vector3 velocity;
-    public float moveSpeed = 10;
-    public float gravity = -20;
-    public float jumpVelocity = 10;
+    public int moveSpeed = 2;
+    float gravity;
+    float jumpVelocity;
 
 	// Use this for initialization
 	void Start () {
         controller = GetComponent<Controller2d>();
         velocity.x = Mathf.Clamp(0, -10, 10);
+        gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex,2);
+        jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 	}
 	
 	// Update is called once per frame
