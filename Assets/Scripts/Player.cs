@@ -39,9 +39,15 @@ public class Player : MonoBehaviour {
             velocity.y = jumpVelocity;
         }
 
-        if(velocity.x * input.x < maxPlayerSpeed)
-            velocity.x += input.x * tempoInc;
+        if(velocity.x < maxPlayerSpeed)
+            velocity.x = 6 * GameObject.Find("Slider").transform.localPosition.x;
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+ 
+
+
+
+
 	}
 }

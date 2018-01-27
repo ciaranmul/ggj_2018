@@ -12,14 +12,16 @@ public class SliderMovement : MonoBehaviour {
     void Start()
     {
         newPosition = transform.position;
+        this.transform.localPosition = Vector3.zero;
     }
     void Update()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             Vector3 position = this.transform.position;
+           
 
-            if (position.x - 0.0002f > -1f)
+            if (this.transform.localPosition.x - 0.0002f > -1f)
             {
                 position.x -= 0.02f;
                 sliderValue = position.x;
@@ -30,7 +32,7 @@ public class SliderMovement : MonoBehaviour {
         if (Input.GetKey(KeyCode.RightArrow))
         {
             Vector3 position = this.transform.position;
-            if(position.x + 0.0002f < 1f)
+            if(this.transform.localPosition.x + 0.0002f < 1f)
             {
                 position.x += 0.02f;
                 sliderValue = position.x;

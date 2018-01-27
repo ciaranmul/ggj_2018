@@ -17,7 +17,7 @@ public class RecordMovement : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        rotationSpeed = Time.deltaTime  * 100 * GameObject.Find("Slider").GetComponent<SliderMovement>().sliderValue;
+        rotationSpeed = Time.deltaTime  * 100 * GameObject.Find("Slider").transform.localPosition.x;
         transform.Rotate(0, rotationSpeed, 0, Space.Self);
     }
 }
