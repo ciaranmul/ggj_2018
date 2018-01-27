@@ -17,12 +17,15 @@ public class Player : MonoBehaviour {
     float gravity;
     float jumpVelocity;
 
-	// Use this for initialization
-	void Start () {
+    Animator animator;
+
+    // Use this for initialization
+    void Start () {
         controller = GetComponent<Controller2d>();
         //velocity.x = Mathf.Clamp(0, -6, 6);
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex,2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+        animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -37,15 +40,31 @@ public class Player : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.Space) && controller.collisions.below)
         {
             velocity.y = jumpVelocity;
+            GameObject.Find("Jump").GetComponent<AudioSource>().Play();
         }
 
-        //if(Mathf.Abs(velocity.x) < maxPlayerSpeed)
-            velocity.x = maxPlayerSpeed * GameObject.Find("Slider").transform.localPosition.x;
+        velocity.x = maxPlayerSpeed * GameObject.Find("Slider").transform.localPosition.x;
 
         print("velocity.x = " + velocity.x);
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        UpdateAnimation();
+
 	}
+
+    void UpdateAnimation()
+    {
+        if (Mathf.Abs(velocity.x) > 1)
+        {
+            animator.SetBool("running", true);
+            animator.speed = Mathf.Abs(GameObject.Find("Slider").transform.localPosition.x);
+        }
+        else
+        {
+            animator.SetBool("running", false);
+        }
+    }
 
 }
