@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(CapsuleCollider))]
 public class Controller2d : MonoBehaviour
 {
     public LayerMask collisionMask;
@@ -15,18 +15,19 @@ public class Controller2d : MonoBehaviour
     float horizontalRaySpacing;
     float verticalRaySpacing;
 
-    CapsuleCollider2D capsuleCollider;
+    CapsuleCollider capsuleCollider;
     RaycastOrigins raycastOrigins;
     public CollisionInfo collisions;
 
     float maxClimbAngle = 80;
     float maxDescendAngle = 80;
 
+    public bool dead = false;
 
     // Use this for initialization
     void Start()
     {
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
         CalculateRaySpacing();
     }
 
@@ -39,6 +40,7 @@ public class Controller2d : MonoBehaviour
     private void OnTriggerEnter(Collider col)
     {
         Debug.Log("Collision");
+        dead = true;
     }
 
 

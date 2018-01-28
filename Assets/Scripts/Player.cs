@@ -71,6 +71,12 @@ public class Player : MonoBehaviour {
         {
             animator.SetBool("running", false);
         }
+
+        if(controller.dead == true)
+        {
+            animator.speed = 1;
+            animator.SetBool("dying", true);
+        }
         
     }
 
