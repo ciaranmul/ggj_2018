@@ -10,7 +10,7 @@ public class Player : MonoBehaviour {
     public float jumpHeight = 4f;
     public float timeToJumpApex = .2f;
 
-    public float maxPlayerSpeed = 10;
+    public float maxPlayerSpeed = 15;
 
     Vector3 velocity;
     public int tempoInc = 2;
@@ -22,7 +22,6 @@ public class Player : MonoBehaviour {
     // Use this for initialization
     void Start () {
         controller = GetComponent<Controller2d>();
-        //velocity.x = Mathf.Clamp(0, -6, 6);
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex,2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         animator = GetComponent<Animator>();
@@ -30,7 +29,7 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        //Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         if(controller.collisions.above || controller.collisions.below)
         {
@@ -48,12 +47,12 @@ public class Player : MonoBehaviour {
                 animator.SetBool("jumping", true);
                 animator.SetBool("running", false);
                 animator.speed = 1;
+
+                GameObject.Find("Startle").GetComponent<ParticleSystem>().Play();
             }
         }
 
         velocity.x = maxPlayerSpeed * GameObject.Find("Slider").transform.localPosition.x;
-
-        print("velocity.x = " + velocity.x);
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);

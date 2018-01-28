@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class Controller2d : MonoBehaviour
 {
     public LayerMask collisionMask;
@@ -15,7 +15,7 @@ public class Controller2d : MonoBehaviour
     float horizontalRaySpacing;
     float verticalRaySpacing;
 
-    CapsuleCollider2D capsuleCollider;
+    BoxCollider2D boxCollider;
     RaycastOrigins raycastOrigins;
     public CollisionInfo collisions;
 
@@ -26,7 +26,7 @@ public class Controller2d : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
         CalculateRaySpacing();
     }
 
@@ -39,7 +39,7 @@ public class Controller2d : MonoBehaviour
 
     void UpdateRaycastOrigins()
     {
-        Bounds bounds = capsuleCollider.bounds;
+        Bounds bounds = boxCollider.bounds;
         bounds.Expand(skinWidth * -2);
 
         raycastOrigins.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
@@ -50,7 +50,7 @@ public class Controller2d : MonoBehaviour
 
 
     void CalculateRaySpacing() {
-        Bounds bounds = capsuleCollider.bounds;
+        Bounds bounds = boxCollider.bounds;
         bounds.Expand(skinWidth * -2);
 
         horizontalRayCount = Mathf.Clamp(horizontalRayCount, 2, int.MaxValue);
@@ -148,6 +148,9 @@ public class Controller2d : MonoBehaviour
                 {
                     velocity.x = velocity.y / Mathf.Tan(collisions.slopeAngle * Mathf.Deg2Rad) * Mathf.Sign(velocity.x);
                 }
+
+                if (hit.collider.CompareTag("Danger"))
+                    Debug.Log("hitting something");
 
                 collisions.below = directionY == -1;
                 collisions.above = directionY == 1;
