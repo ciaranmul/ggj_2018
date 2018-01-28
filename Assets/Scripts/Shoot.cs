@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour {
 
-    public float projectileSpeed = 2;
     public Rigidbody projectile;
 
     public float fireRate;
@@ -13,26 +12,19 @@ public class Shoot : MonoBehaviour {
 
     void Fire()
     {
-        Rigidbody bulletClone = (Rigidbody)Instantiate(projectile, new Vector3(this.transform.position.x-0.5f, this.transform.transform.position.y, this.transform.position.z), transform.rotation);
-        bulletClone.velocity = transform.right * -projectileSpeed;
+        Rigidbody bulletClone = (Rigidbody)Instantiate(projectile, this.transform.position, transform.rotation);
     }
-
-    // Use this for initialization
-    void Start () {
-		
-	}
 
     // Update is called once per frame
     void Update()
     {
-        
 
-        if (Time.time > nextFire)
-        {
-      nextFire = Time.time + fireRate;
-        Fire();
+        if (Time.time > nextFire){
+            nextFire = Time.time + fireRate;
+            Fire();
         }
-      
+
+
 
     }
 }
