@@ -23,6 +23,7 @@ public class SliderMovement : MonoBehaviour
             }
 
         }
+
         if (Input.GetKey(KeyCode.RightArrow))
         {
             Vector3 position = this.transform.position;

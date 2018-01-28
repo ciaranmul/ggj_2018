@@ -31,6 +31,12 @@ public class Player : MonoBehaviour {
 	void Update () {
         //Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
+        if(controller.dead)
+        {
+            maxPlayerSpeed = 0;
+            velocity.x = velocity.y = 0;
+        }
+
         if(controller.collisions.above || controller.collisions.below)
         {
             velocity.y = 0;
